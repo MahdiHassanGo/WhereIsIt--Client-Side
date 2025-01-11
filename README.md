@@ -4,7 +4,7 @@ WhereIsIt is a Lost and Found web application designed to help users report lost
 ## Live URL
 https://whereisit-88cd2.web.app
 
-<img src="./Main-1.png">
+
 
 ## Purpose
 The purpose of WhereIsIt is to create a centralized platform where users can:
@@ -35,14 +35,14 @@ The purpose of WhereIsIt is to create a centralized platform where users can:
    - Secure storage of item details, user information, and interactions.
 8. **API Integration**:
    - Streamlined processes for managing posts and user interactions.
-<img src="./Main-2.png">
+
 
 ## Technologies Used
 ### Frontend:
 - **React**: Component-based UI design.
 - **TailwindCSS**: For styling and responsive design.
 - **React Router**: For seamless navigation.
-<img src="./Main-3.png">
+
 
 ### Backend:
 - **Node.js**: Server-side logic.
@@ -51,7 +51,7 @@ The purpose of WhereIsIt is to create a centralized platform where users can:
 
 ### Database:
 - **MongoDB**: NoSQL database for storing user data, item details, and interactions.
-<img src="./Main-4.png">
+
 
 ### Authentication:
 - **JSON Web Tokens (JWT)**: For secure authentication.
