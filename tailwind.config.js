@@ -8,12 +8,12 @@ export default {
     extend: {
       colors: {
         Footer: '#243642',
-        Buttons: '#FFD700',
+        Buttons: '#FF9C73',
         AddCam:'#387478',
-        Card:'#C08261',
+        Card:'#CC2B52',
         together:'#F7C566',
         AllCard:'#79D7BE',
-        Profile:'#1E90FF',
+        Profile:'#AF1740',
         BG:'#20B2AA',
         bgrecent1:"#5ee7df",
         bgrecent2:"#b490ca",
@@ -23,8 +23,12 @@ export default {
         bgButton2:"#fda085",
         footerBg1:"#4facfe",
         footerBg2:"#00f2fe",
+        bgforRecent:'#DE7C7D',
 
      
+      },
+      fontFamily:{
+'Roboto': ["Roboto Mono", 'serif'],
       }
     },
   },

@@ -40,7 +40,7 @@ const ItemSection = () => {
   }
 
   return (
-    <div className="hero px-4 md:px-8 min-h-screen flex flex-col mb-10 mt-10 bg-gradient-to-r from-bgrecent1 to-bgrecent2"
+    <div className="hero px-4 md:px-8 min-h-screen flex flex-col mb-10 mt-10 bg-slate-300"
       data-aos="fade-up"
     >
       <div className="hero-content text-center">
@@ -77,7 +77,7 @@ const ItemSection = () => {
                 <strong>Date Lost:</strong> {item.dateLost ? new Date(item.dateLost).toLocaleDateString() : "Unknown"}
               </p>
               <Link to={`/items/${item._id}`}
-                className="btn bg-gradient-to-r from-bgButton1 to-bgButton2 hover:bg-Profile text-white"
+                className="btn bg-bgforRecent text-white "
               >
                 View Details
               </Link>
@@ -88,7 +88,7 @@ const ItemSection = () => {
 
       <div className="text-center">
        
-        <Link to="/allitems" className="btn bg-Buttons mb-10">
+        <Link to="/allitems" className="btn bg-Buttons text-white mb-10">
           See All
         </Link>
       </div>

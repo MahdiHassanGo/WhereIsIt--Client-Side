@@ -1,9 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useKeenSlider } from "keen-slider/react";
+import "keen-slider/keen-slider.min.css";
 import Aos from "aos";
 import "aos/dist/aos.css";
 
 const MainSlider = () => {
-  const [currentSlide, setCurrentSlide] = useState(0); 
+  const [sliderRef, slider] = useKeenSlider({
+    loop: true,
+    duration: 1000, // Slide transition duration
+    slides: {
+      perView: 1, // Show one slide at a time
+    },
+    created: (sliderInstance) => {
+      setInterval(() => {
+        sliderInstance.next(); // Automatically advance slides every 2 seconds
+      }, 2000);
+    },
+  });
+
   const slides = [
     {
       id: 1,
@@ -39,37 +53,30 @@ const MainSlider = () => {
     Aos.init({ duration: 1000 });
     document.title = "Home | CrowdCube";
     window.scrollTo(0, 0);
-
-    const interval = setInterval(() => {
-      setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-    }, 5000); 
-    return () => clearInterval(interval); 
-  }, [slides.length]);
+  }, []);
 
   return (
-    <div className="carousel w-full mb-10 mt-10">
-      {slides.map((slide, index) => (
+    <div
+      className="keen-slider w-11/12 mx-auto mt-10 bg-no-repeat bg-center"
+      ref={sliderRef}
+    >
+      {slides.map((slide) => (
         <div
           key={slide.id}
-          className={`carousel-item relative w-full ${
-            index === currentSlide ? "block" : "hidden"
-          }`}
+          className="keen-slider__slide bg-no-repeat bg-cover  bg-center"
+          style={{
+            backgroundImage: `url(${slide.backgroundImage})`,
+          }}
         >
-          <div
-            className="hero sm:min-h-[60vh] md:min-h-[80vh] bg-cover bg-center"
-            data-aos="fade-up"
-            style={{
-              backgroundImage: `url(${slide.backgroundImage})`,
-            }}
-          >
-            <div className="hero-overlay  "></div>
-            <div className="hero-content text-neutral-content text-center px-4">
-              <div className="max-w-xs sm:max-w-sm">
-                <h1 className="mb-3 text-2xl sm:text-3xl font-bold text-white">
-                  {slide.title}
-                </h1>
-                <p className="mb-3 text-sm sm:text-base text-white">{slide.description}</p>
-              </div>
+          <div className="relative sm:min-h-[50vh] md:min-h-[80vh] h-[40vh] flex flex-col justify-center items-center text-center text-white px-4">
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black opacity-40"></div>
+            {/* Content */}
+            <div className="relative z-10">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3">
+                {slide.title}
+              </h1>
+              <p className="text-sm sm:text-base mb-4">{slide.description}</p>
             </div>
           </div>
         </div>

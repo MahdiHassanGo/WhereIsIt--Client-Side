@@ -16,10 +16,13 @@ const MainLayout = () => {
       }, []);
     return (
         <div className=''>
-         
-            <div className='mt-10 w-11/12 mx-auto'>
+          <div className='  mx-auto w-11/12'>
+          <Navbar></Navbar>
+          </div>
+       
+            <div className='mx-auto'>
             
-            <Navbar  ></Navbar>
+            
             <MainPage></MainPage>
             <MainSlider></MainSlider>
             <ItemSection></ItemSection>

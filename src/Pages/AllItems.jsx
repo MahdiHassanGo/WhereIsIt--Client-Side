@@ -50,7 +50,7 @@ const AllItems = () => {
 
   return (
     <div>
-      <div className="mt-10 w-11/12 mx-auto">
+      <div className="mt-40 w-11/12 mx-auto ">
         <Navbar />
         <div className="hero bg-white px-4 md:px-8 min-h-screen flex flex-col mb-10 mt-10" data-aos="fade-up">
           <div className="hero-content text-center">
@@ -95,7 +95,7 @@ const AllItems = () => {
                   <p className="text-white">
                     <strong>Date Lost:</strong> {new Date(item.dateLost).toLocaleDateString()}
                   </p>
-                  <Link to={`/items/${item._id}`} className="btn bg-gradient-to-r from-bgButton1 to-bgButton2 hover:bg-Profile text-white">
+                  <Link to={`/items/${item._id}`} className="btn text-white bg-bgforRecent">
                     View Details
                   </Link>
                 </div>

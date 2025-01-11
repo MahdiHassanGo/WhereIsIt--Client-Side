@@ -50,7 +50,7 @@ const CustomerReview = () => {
                 key={testimonial.id}
                 layoutId={testimonial.id}
                 onClick={() => setSelectedId(testimonial.id)}
-                className="bg-footerBg1 shadow-md rounded-lg p-4 w-full md:w-1/3 transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl cursor-pointer"
+                className="bg-Card shadow-md rounded-lg p-4 w-full md:w-1/3 transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl cursor-pointer"
               >
                 <img
                   src={testimonial.image}
@@ -68,7 +68,7 @@ const CustomerReview = () => {
             {selectedId && (
               <motion.div
                 layoutId={selectedId}
-                className="absolute top-0 left-0 bg-gradient-to-r from-bgButton1 to-bgButton2 w-full h-full flex flex-col items-center justify-center p-6 z-50"
+                className="absolute top-0 left-0 bg-Card w-full h-full flex flex-col items-center justify-center p-6 z-50"
               >
                 <button
                   onClick={() => setSelectedId(null)}
@@ -85,10 +85,10 @@ const CustomerReview = () => {
                         alt={testimonial.name}
                         className="w-32 h-32 rounded-full mx-auto mb-4"
                       />
-                      <h3 className="text-2xl font-bold text-red-900 mb-2">
+                      <h3 className="text-2xl font-bold text-white mb-2">
                         {testimonial.name}
                       </h3>
-                      <p className="text-red-800 italic">{testimonial.quote}</p>
+                      <p className="text-white italic">{testimonial.quote}</p>
                     </div>
                   ))}
               </motion.div>

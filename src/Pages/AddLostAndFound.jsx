@@ -92,7 +92,7 @@ const AddLostAndFound = () => {
 
   return (
     <div>
-      <div className="mt-10 w-11/12 mx-auto">
+      <div className="mt-40 w-11/12 mx-auto">
         <Navbar />
       </div>
       <div className="lg:w-3/4 mx-auto mb-10" data-aos="fade-up">
