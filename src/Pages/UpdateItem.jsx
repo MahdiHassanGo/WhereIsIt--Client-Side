@@ -107,9 +107,9 @@ const UpdateItem = () => {
       <div className="mt-10 w-11/12 mx-auto">
         <Navbar />
       </div>
-      <div className="lg:w-3/4 mx-auto mb-10" data-aos="fade-up">
-        <div className="text-center p-10">
-          <h1 className="text-5xl font-bold">Update Lost & Found Item</h1>
+      <div className="lg:w-3/4 mx-auto mb-10 mt-20" data-aos="fade-up">
+        <div className="text-center p-10 mt-20">
+          <h1 className="text-5xl font-bold mt-20">Update Lost & Found Item</h1>
         </div>
         <div className="card bg-Buttons w-full shadow-2xl">
           <form onSubmit={handleUpdateItem} className="card-body">

@@ -61,15 +61,15 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen gap-6">
-      {/* Lottie Animation */}
-      <div className="w-full md:w-1/2 flex justify-center">
-        <Lottie animationData={LoginLottie} className="w-3/4 md:w-full" />
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen gap-6 mt-0">
+     
+      <div className="w-full md:w-1/2 flex justify-center mt-20">
+        <Lottie animationData={LoginLottie} className="w-3/4 md:w-full mt-20" />
       </div>
 
       <ToastContainer position="top-center" />
 
-      {/* Login Form */}
+    
       <div
         className="hero flex items-center justify-center w-full md:w-1/2"
         data-aos="fade-up"

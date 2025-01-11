@@ -75,10 +75,10 @@ const ManageItem = () => {
 
   return (
     <div>
-    <div className="flex flex-col min-h-screen w-11/12 mx-auto mt-10">
+    <div className="flex flex-col min-h-screen w-11/12 mx-auto mt-20">
       <Navbar />
-      <div className="mt-10 w-11/12 mx-auto flex-grow" data-aos="fade-up">
-        <h2 className="text-3xl text-center">My Items</h2>
+      <div className="mt-20 w-11/12 mx-auto flex-grow " data-aos="fade-up">
+        <h2 className="text-3xl text-center mt-20">My Items</h2>
 
         <div className="text-center mt-4">
           <p>Email: {user?.email || "Not logged in"}</p>

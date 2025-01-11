@@ -40,12 +40,12 @@ const ItemSection = () => {
   }
 
   return (
-    <div className="hero px-4 md:px-8 min-h-screen flex flex-col mb-10 mt-10 bg-slate-300"
-      data-aos="fade-up"
+    <div className="hero px-4 md:px-8 min-h-screen flex flex-col mb-10  bg-slate-300"
+      
     >
       <div className="hero-content text-center">
         <div className="max-w-md">
-          <h1 className="text-5xl font-bold text-black mt-10">Latest Find & Lost Items</h1>
+          <h1 className="text-5xl font-bold text-black mt-10" data-aos="fade-up">Latest Find & Lost Items</h1>
         </div>
       </div>
 

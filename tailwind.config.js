@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        Footer: '#243642',
+        Footer: '#740938',
         Buttons: '#FF9C73',
         AddCam:'#387478',
         Card:'#CC2B52',
