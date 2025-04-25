@@ -26,14 +26,12 @@ const AddLostAndFound = () => {
   const handleAddItem = (e) => {
     e.preventDefault();
 
-    
     const postType = e.target.postType.value;
-    const thumbnail = e.target.thumbnail.value;  
+    const thumbnail = e.target.thumbnail.value;
     const title = e.target.title.value;
     const description = e.target.description.value;
     const category = e.target.category.value;
     const location = e.target.location.value;
-
 
     const newItem = {
       postType,
@@ -44,13 +42,11 @@ const AddLostAndFound = () => {
       location,
       dateLost,
       username: user?.displayName || "Anonymous User",
-      email: user?.email || "Anonymous",  
+      email: user?.email || "Anonymous",
     };
 
-  
     console.log("New Item:", newItem);
 
- 
     fetch("https://whereisitserver.vercel.app/lost-items", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,7 +61,7 @@ const AddLostAndFound = () => {
             icon: "success",
             confirmButtonText: "Ok",
           });
-          e.target.reset(); 
+          e.target.reset();
         } else {
           Swal.fire({
             title: "Error!",
@@ -91,96 +87,84 @@ const AddLostAndFound = () => {
   }
 
   return (
-    <div>
+    <div className="bg-gray-100">
       <div className="mt-40 w-11/12 mx-auto">
         <Navbar />
       </div>
       <div className="lg:w-3/4 mx-auto mb-10" data-aos="fade-up">
         <div className="text-center p-10">
-          <h1 className="text-5xl font-bold">Add Lost & Found Item</h1>
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-gray-800 mb-8">Add Lost & Found Item</h1>
         </div>
-        <div className="card bg-Buttons w-full shadow-2xl">
-          <form onSubmit={handleAddItem} className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black">Post Type</span>
-              </label>
-              <select name="postType" className="input input-bordered" required>
-                <option value="Lost">Lost</option>
-                <option value="Found">Found</option>
-              </select>
+        <div className="bg-white shadow-lg rounded-lg p-8 mb-8">
+          <form onSubmit={handleAddItem}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="form-control">
+                <label className="label text-gray-700">Post Type</label>
+                <select name="postType" className="input input-bordered" required>
+                  <option value="Lost">Lost</option>
+                  <option value="Found">Found</option>
+                </select>
+              </div>
+              <div className="form-control">
+                <label className="label text-gray-700">Thumbnail (Image URL)</label>
+                <input
+                  type="text"
+                  name="thumbnail"
+                  placeholder="Enter your Thumbnail URL"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label text-gray-700">Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="Item title"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label text-gray-700">Description</label>
+                <textarea
+                  name="description"
+                  placeholder="Describe the item"
+                  className="textarea textarea-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label text-gray-700">Category</label>
+                <select name="category" className="input input-bordered" required>
+                  <option value="pets">Pets</option>
+                  <option value="documents">Documents</option>
+                  <option value="gadgets">Gadgets</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div className="form-control">
+                <label className="label text-gray-700">Location</label>
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="Location where the item was lost"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+              <div className="form-control">
+                <label className="label text-gray-700">Date Lost</label>
+                <DatePicker
+                  selected={dateLost}
+                  onChange={(date) => setDateLost(date)}
+                  className="input input-bordered"
+                  required
+                />
+              </div>
             </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black">Thumbnail (Image URL)</span>
-              </label>
-              <input
-                type="text"
-                name="thumbnail"
-                placeholder="Enter your Thumbnail URL"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black">Title</span>
-              </label>
-              <input
-                type="text"
-                name="title"
-                placeholder="Item title"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black">Description</span>
-              </label>
-              <textarea
-                name="description"
-                placeholder="Describe the item"
-                className="textarea textarea-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black">Category</span>
-              </label>
-              <select name="category" className="input input-bordered" required>
-                <option value="pets">Pets</option>
-                <option value="documents">Documents</option>
-                <option value="gadgets">Gadgets</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black">Location</span>
-              </label>
-              <input
-                type="text"
-                name="location"
-                placeholder="Location where the item was lost"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-black">Date Lost</span>
-              </label>
-              <DatePicker
-                selected={dateLost}
-                onChange={(date) => setDateLost(date)}
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control mt-6">
-              <button type="submit" className="btn bg-Profile hover:bg-Footer text-white">
+            <div className="form-control mt-8">
+              <button type="submit" className="btn w-full py-3 bg-Profile hover:bg-gray-300 text-white hover:text-black font-semibold rounded-md shadow-md">
                 Add Item
               </button>
             </div>
