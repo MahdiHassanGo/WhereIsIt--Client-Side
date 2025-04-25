@@ -15,16 +15,16 @@ const modalStyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
+  width: 450,
+  bgcolor: "#ffffff",
+  borderRadius: 10,
   boxShadow: 24,
-  p: 4,
-  borderRadius: 2,
+  p: 5,
 };
 
 const successModalStyle = {
   ...modalStyle,
-  width: 300,
+  width: 350,
 };
 
 const PostDetails = () => {
@@ -97,86 +97,95 @@ const PostDetails = () => {
   if (isLoading || !item) return <Loading />;
 
   return (
-    <div>
-      <div className="ml-4 md:ml-20">
+    <div className="bg-gradient-to-r from-blue-50 to-purple-50 min-h-screen py-10">
+      <div className="ml-12">
       <Navbar />
       </div>
- 
-      <div className="w-11/12 lg:w-8/12 mx-auto py-16 bg-gray-100 mb-10 shadow-lg flex flex-col lg:flex-row gap-6 mt-60 items-center">
-       
-        {item.thumbnail && (
-          <img
-            src={item.thumbnail}
-            alt={item.title || "Item Thumbnail"}
-            className="w-full lg:w-1/2 rounded-lg md:ml-20"
-          />
-        )}
+  
+      <div className="w-full lg:w-10/12 mx-auto py-16 px-6 bg-white shadow-2xl rounded-lg mt-40 mb-10">
+        <div className="flex flex-col lg:flex-row gap-8 items-center justify-between">
+          {/* Item Image */}
+          <div className="flex-shrink-0">
+            {item.thumbnail && (
+              <img
+                src={item.thumbnail}
+                alt={item.title || "Item Thumbnail"}
+                className="rounded-lg shadow-lg transform hover:scale-105 transition duration-500"
+              />
+            )}
+          </div>
 
-     
-        <div className="flex flex-col justify-center items-start text-left w-1/2 lg:w-1/2">
-          <h2 className="text-2xl sm:text-4xl font-bold mb-6 text-black">
-            {item.title}
-          </h2>
-          <p className="text-lg mb-4 text-black">{item.description}</p>
-          <p className="text-lg font-bold mb-4 text-black">
-            Status: {item.postType}
-          </p>
+          {/* Item Details */}
+          <div className="flex flex-col justify-start items-start w-full lg:w-1/2">
+            <h2 className="text-3xl font-extrabold text-gray-800 mb-4">{item.title}</h2>
+            <p className="text-lg text-gray-600 mb-6">{item.description}</p>
+            <p className="text-xl font-semibold text-gray-700 mb-4">
+              Status:{" "}
+              <span
+                className={`${
+                  item.status === "recovered" ? "text-green-600" : "text-yellow-600"
+                }`}
+              >
+                {item.status}
+              </span>
+            </p>
 
-          
-          {item.status !== "recovered" && (
-            <button
-              className="btn bg-blue-500 text-white mb-4"
-              onClick={() => setOpenModal(true)}
+            {/* Recovery Button */}
+            {item.status !== "recovered" && (
+              <button
+                className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-full shadow-lg hover:bg-gradient-to-l transition duration-300"
+                onClick={() => setOpenModal(true)}
+              >
+                {item.postType === "Lost" ? "Found This!" : "This is Mine!"}
+              </button>
+            )}
+            {item.status === "recovered" && (
+              <button
+                className="bg-gray-400 text-white py-3 px-6 rounded-full shadow-lg cursor-not-allowed"
+                disabled
+              >
+                Already Recovered
+              </button>
+            )}
+
+            <Link
+              to="/allitems"
+              className="bg-gray-300 text-gray-800 py-3 px-6 rounded-full mt-4 shadow-lg hover:bg-gray-400 transition duration-300"
             >
-              {item.postType === "Lost" ? "Found This!" : "This is Mine!"}
-            </button>
-          )}
-          {item.status === "recovered" && (
-            <button
-              className="btn bg-gray-400 text-black cursor-not-allowed mb-4"
-              disabled
-            >
-              Already Recovered
-            </button>
-          )}
-          <Link to="/allitems" className="btn bg-bgButton1 text-black">
-            Back
-          </Link>
+              Back to All Items
+            </Link>
+          </div>
         </div>
       </div>
 
-  
+      {/* Modal for Recovery Details */}
       <Modal open={openModal} onClose={() => setOpenModal(false)}>
         <Box sx={modalStyle}>
-          <h2 className="text-xl font-bold mb-4">Recovery Details</h2>
-          <p className="mb-4">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Recovery Details</h2>
+          <p className="text-lg text-gray-700 mb-4">
             <strong>
               {item.postType === "Lost" ? "Found Description" : "Lost Description"}
             </strong>
             : {item.description}
           </p>
-          <label className="block mb-2">
-            {item.postType === "Lost" ? "Found Location" : "Lost Location"}
-          </label>
+          <label className="block text-gray-700 mb-2">Location</label>
           <input
             type="text"
             value={recoveredLocation}
             onChange={(e) => setRecoveredLocation(e.target.value)}
-            className="w-full border rounded p-2 mb-4"
+            className="w-full p-3 border-2 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-blue-600"
           />
-          <label className="block mb-2">
-            {item.postType === "Lost" ? "Found Date" : "Lost Date"}
-          </label>
+          <label className="block text-gray-700 mb-2">Date</label>
           <DatePicker
             selected={recoveryDate}
             onChange={(date) => setRecoveryDate(date)}
-            className="w-full border rounded p-2 mb-4"
+            className="w-full p-3 border-2 border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-blue-600"
           />
-          <p className="mb-4">
+          <p className="text-sm text-gray-600 mb-4">
             <strong>Recovered By:</strong> {user.displayName} ({user.email})
           </p>
           <button
-            className="btn bg-green-500 text-white"
+            className="bg-green-600 text-white py-3 px-6 rounded-full w-full hover:bg-green-700 transition duration-300"
             onClick={handleRecover}
             disabled={item.status === "recovered"}
           >
@@ -185,21 +194,22 @@ const PostDetails = () => {
         </Box>
       </Modal>
 
-     
+      {/* Success Modal */}
       <Modal open={openSuccessModal} onClose={() => setOpenSuccessModal(false)}>
         <Box sx={successModalStyle}>
-          <h2 className="text-xl font-bold mb-4">Success!</h2>
-          <p className="mb-4">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">Success!</h2>
+          <p className="text-lg text-gray-700 mb-4">
             Your item has been successfully marked as recovered!
           </p>
           <button
-            className="btn bg-blue-500 text-white"
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 px-6 rounded-full shadow-lg hover:bg-gradient-to-l transition duration-300"
             onClick={() => setOpenSuccessModal(false)}
           >
             Close
           </button>
         </Box>
       </Modal>
+
       <Footer />
     </div>
   );
