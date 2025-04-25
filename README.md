@@ -1,5 +1,7 @@
 Here is the text you provided, formatted in Markdown for a `README.md` file:
 
+
+
 ```markdown
 # WhereIsIt
 
@@ -7,7 +9,7 @@ WhereIsIt is a Lost and Found web application designed to help users report lost
 
 ## Live URL
 [WhereIsIt Live Demo](https://whereisit-88cd2.web.app)
-
+![image](https://github.com/user-attachments/assets/8ef986ed-54bf-4840-aabf-3e64068e936d)
 ![Project Preview](https://github.com/user-attachments/assets/8ef986ed-54bf-4840-aabf-3e64068e936d)
 
 ## Project Overview
@@ -45,7 +47,7 @@ The purpose of WhereIsIt is to connect people in their search for lost items and
 
 8. **API Integration**:
    - Efficient backend API for managing posts, user interactions, and notifications.
-
+![image](https://github.com/user-attachments/assets/b2d1dbcb-542a-4726-b7c1-bc7fa62381e4)
 ## Tech Stack
 ### Frontend:
 - **React**: For building dynamic, component-based user interfaces.
@@ -110,11 +112,7 @@ This will start the React application and open it in your default browser.
 ## Live Link
 You can try the live version of the application at: [WhereIsIt - Live Demo](https://whereisit-88cd2.web.app)
 
-## Default Credentials (If needed)
-For testing purposes, use the following credentials:
 
-- **Email**: testuser@example.com
-- **Password**: password123
 
 ## npm Packages Used
 This project relies on the following npm packages:
