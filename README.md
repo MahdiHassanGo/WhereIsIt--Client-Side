@@ -1,7 +1,7 @@
 Here is the text you provided, formatted in Markdown for a `README.md` file:
 
-
-
+![image](https://github.com/user-attachments/assets/8ef986ed-54bf-4840-aabf-3e64068e936d)
+![Project Interface](https://github.com/user-attachments/assets/b2d1dbcb-542a-4726-b7c1-bc7fa62381e4)
 ```markdown
 # WhereIsIt
 
@@ -9,7 +9,7 @@ WhereIsIt is a Lost and Found web application designed to help users report lost
 
 ## Live URL
 [WhereIsIt Live Demo](https://whereisit-88cd2.web.app)
-![image](https://github.com/user-attachments/assets/8ef986ed-54bf-4840-aabf-3e64068e936d)
+
 ![Project Preview](https://github.com/user-attachments/assets/8ef986ed-54bf-4840-aabf-3e64068e936d)
 
 ## Project Overview
@@ -18,7 +18,7 @@ WhereIsIt provides a centralized platform to help users recover lost items or re
 ### Purpose
 The purpose of WhereIsIt is to connect people in their search for lost items and provide an easy way for users to post items they have found. By offering a simple interface and important tools like search and item categorization, users can easily interact with one another to recover belongings effectively.
 
-![Project Interface](https://github.com/user-attachments/assets/b2d1dbcb-542a-4726-b7c1-bc7fa62381e4)
+
 
 ## Key Features
 1. **User Authentication**:
