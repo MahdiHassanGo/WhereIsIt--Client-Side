@@ -128,11 +128,3 @@ This project relies on the following npm packages:
 - `dotenv`: For environment variable management.
 - `react-datepicker`: For selecting dates on the frontend.
 ```
-
-### Key Formatting Notes:
-1. **Code Blocks**: Code snippets (like commands and environment variables) are placed inside triple backticks for readability.
-2. **Lists**: Key Features, Tech Stack, and Instructions have been organized using bullet points and numbered lists.
-3. **Headings**: Markdown headers (`##`) are used to organize sections such as `Live URL`, `Project Overview`, and `Key Features`.
-4. **Links & Images**: The `Live URL` and images are formatted using Markdown syntax for external links and images.
-   
-This version of the `README.md` is now ready to be added to your GitHub repository.
