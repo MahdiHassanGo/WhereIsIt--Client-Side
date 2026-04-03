@@ -1,4 +1,93 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@import 'bootstrap/dist/css/bootstrap.min.css';
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@theme {
+  --color-background: #0F172A;
+  --color-glass-bg: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-primary: #8B5CF6;
+  --color-secondary: #06B6D4;
+  --color-accent: #F43F5E;
+
+  --font-heading: "Outfit", sans-serif;
+  --font-sans: "Inter", sans-serif;
+
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+@layer base {
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    color: #e2e8f0;
+    font-family: var(--font-sans), sans-serif;
+    min-height: 100vh;
+    position: relative;
+    background: radial-gradient(circle at top left, rgba(139, 92, 246, 0.15), transparent 40%),
+                radial-gradient(circle at bottom right, rgba(6, 182, 212, 0.15), transparent 40%);
+    background-color: var(--color-background);
+    background-attachment: fixed;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+
+  .hero, .card, .card-body, .form-control, .modal, .modal-box {
+    background-color: transparent;
+  }
+}
+
+@layer components {
+  .glass-panel {
+    background-color: var(--color-glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: var(--shadow-glass);
+    border-radius: 1rem;
+  }
+
+  .glass-card {
+    background-color: var(--color-glass-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--color-glass-border);
+    box-shadow: var(--shadow-glass);
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-0.25rem);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .text-gradient {
+    background: linear-gradient(90deg, #8b5cf6, #a855f7, #06b6d4);
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+
+  .btn-primary-gradient {
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    color: #fff;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .btn-primary-gradient:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-glow);
+  }
+}
+

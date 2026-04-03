@@ -1,21 +1,13 @@
-import "aos/dist/aos.css";
-import Aos from "aos";
 import { useEffect, useContext, useState } from "react";
 import { AuthContext } from './../provider/AuthProvider';
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { FaGoogle } from "react-icons/fa";
-import LoginLottie from "../../Login.json";
-import Lottie from "lottie-react";
+import { motion } from "framer-motion";
 
 const Login = () => {
   useEffect(() => {
-    Aos.init({ duration: 1000 });
-  }, []);
-  useEffect(() => {
     document.title = "Login | WhereIsIt?";
-  }, []);
-  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
@@ -61,69 +53,75 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen gap-6 mt-0">
-     
-      <div className="w-full md:w-1/2 flex justify-center mt-20">
-        <Lottie animationData={LoginLottie} className="w-3/4 md:w-full mt-20" />
-      </div>
-
+    <div className="min-h-screen flex items-center justify-center px-6 py-20">
       <ToastContainer position="top-center" />
 
-    
-      <div
-        className="hero flex items-center justify-center w-full md:w-1/2"
-        data-aos="fade-up"
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-md"
       >
-        <div className="hero-content flex-col gap-6 w-full px-4 sm:px-8 md:px-16 lg:px-0">
-          <div className="text-center lg:text-left">
-            <h1 className="text-5xl font-bold">Login now!</h1>
-          </div>
-          <div className="card bg-base-100 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg shadow-2xl p-4 md:p-6">
-            <form onSubmit={handleSubmit} className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="email"
-                  className="input input-bordered"
-                  required
-                />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="password"
-                  className="input input-bordered"
-                  required
-                />
-                <div className="flex gap-10 mt-2">
-                  <label className="label">
-                    <Link
-                      to="/auth/register"
-                      className="label-text-alt link link-hover"
-                    >
-                      Register Here
-                    </Link>
-                  </label>
-                </div>
-              </div>
-              <div className="form-control mt-6">
-                <button className="btn bg-Profile text-white">Login</button>
-                <button onClick={handleGoogleSignIn} className="btn mt-5">
-                  <FaGoogle /> Login with Google
-                </button>
-              </div>
-            </form>
-          </div>
+        {/* Header */}
+        <div className="text-center mb-10">
+          <Link to="/" className="text-3xl font-extrabold text-gradient" style={{fontFamily: 'Outfit, sans-serif'}}>
+            WhereIsIt.
+          </Link>
+          <h1 className="text-4xl font-bold text-white mt-6 mb-2" style={{fontFamily: 'Outfit, sans-serif'}}>Welcome back</h1>
+          <p className="text-slate-400">Sign in to your account to continue</p>
         </div>
-      </div>
+
+        {/* Form Card */}
+        <div className="glass-panel p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-slate-300 text-sm font-medium mb-2">Email</label>
+              <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50 transition-all"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-slate-300 text-sm font-medium mb-2">Password</label>
+              <input
+                type="password"
+                name="password"
+                placeholder="••••••••"
+                className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50 transition-all"
+                required
+              />
+            </div>
+
+            <button type="submit" className="btn-primary-gradient w-full py-3 text-lg rounded-xl">
+              Sign In
+            </button>
+
+            <div className="relative flex items-center justify-center my-4">
+              <div className="border-t border-white/10 flex-grow"></div>
+              <span className="mx-4 text-slate-500 text-xs uppercase tracking-widest">or</span>
+              <div className="border-t border-white/10 flex-grow"></div>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              className="btn-outline-glass w-full py-3 rounded-xl flex items-center justify-center gap-3 text-sm"
+            >
+              <FaGoogle className="text-[#8B5CF6]" /> Continue with Google
+            </button>
+          </form>
+
+          <p className="text-center text-slate-400 text-sm mt-8">
+            Don't have an account?{" "}
+            <Link to="/auth/register" className="text-[#06B6D4] hover:text-white transition-colors font-medium">
+              Create one
+            </Link>
+          </p>
+        </div>
+      </motion.div>
     </div>
   );
 };

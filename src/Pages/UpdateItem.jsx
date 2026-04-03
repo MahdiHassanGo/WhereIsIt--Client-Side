@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from 'react-router-dom';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { AuthContext } from "../provider/AuthProvider";
 import Swal from 'sweetalert2';
-import Aos from 'aos';
-import 'aos/dist/aos.css';
 import Loading from "../components/Loading";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { motion } from "framer-motion";
 
 const UpdateItem = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -17,19 +15,15 @@ const UpdateItem = () => {
   const [dateLost, setDateLost] = useState(new Date());
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   useEffect(() => {
-    Aos.init({ duration: 1000 });
-    document.title = "Update Lost & Found Item | WhereIsIt";
-
-   
-    fetch(`https://whereisitserver.vercel.app
-/lost-items/${id}`)
+    document.title = "Update Item | WhereIsIt";
+    fetch(`https://whereisitserver.vercel.app/lost-items/${id}`)
       .then(res => res.json())
       .then(data => {
         setItemData(data);
-        setDateLost(new Date(data.dateLost)); 
+        setDateLost(new Date(data.dateLost));
         setIsLoading(false);
       })
       .catch((error) => {
@@ -40,21 +34,13 @@ const UpdateItem = () => {
 
   const handleUpdateItem = (e) => {
     e.preventDefault();
-
-    const postType = e.target.postType.value;
-    const thumbnail = e.target.thumbnail.value;
-    const title = e.target.title.value;
-    const description = e.target.description.value;
-    const category = e.target.category.value;
-    const location = e.target.location.value;
-
     const updatedItem = {
-      postType,
-      thumbnail,
-      title,
-      description,
-      category,
-      location,
+      postType: e.target.postType.value,
+      thumbnail: e.target.thumbnail.value,
+      title: e.target.title.value,
+      description: e.target.description.value,
+      category: e.target.category.value,
+      location: e.target.location.value,
       dateLost,
       contactInfo: {
         name: user?.displayName || "Anonymous User",
@@ -62,8 +48,7 @@ const UpdateItem = () => {
       },
     };
 
-    fetch(`https://whereisitserver.vercel.app
-/lost-items/${id}`, {
+    fetch(`https://whereisitserver.vercel.app/lost-items/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedItem),
@@ -71,155 +56,102 @@ const UpdateItem = () => {
       .then((res) => res.json())
       .then((data) => {
         if (data.acknowledged) {
-          Swal.fire({
-            title: "Success!",
-            text: "Lost & Found Item updated successfully",
-            icon: "success",
-            confirmButtonText: "Ok",
-          });
+          Swal.fire({ title: "Success!", text: "Item updated successfully", icon: "success", confirmButtonText: "Ok",
+            background: '#1E293B', color: '#e2e8f0', confirmButtonColor: '#8B5CF6' });
           navigate('/mangeitem');
         } else {
-          Swal.fire({
-            title: "Error!",
-            text: "Failed to update item.",
-            icon: "error",
-            confirmButtonText: "Try Again",
-          });
+          Swal.fire({ title: "Error!", text: "Failed to update.", icon: "error", confirmButtonText: "Try Again",
+            background: '#1E293B', color: '#e2e8f0', confirmButtonColor: '#F43F5E' });
         }
       })
-      .catch((error) => {
-        console.error("Network or server error:", error);
-        Swal.fire({
-          title: "Error!",
-          text: "Something went wrong. Please try again.",
-          icon: "error",
-          confirmButtonText: "Ok",
-        });
+      .catch(() => {
+        Swal.fire({ title: "Error!", text: "Something went wrong.", icon: "error", confirmButtonText: "Ok",
+          background: '#1E293B', color: '#e2e8f0', confirmButtonColor: '#F43F5E' });
       });
   };
 
-  if (isLoading || !itemData) {
-    return <Loading />;
-  }
+  if (isLoading || !itemData) return <Loading />;
 
   return (
-    <div>
-      <div className="mt-10 w-11/12 mx-auto">
-        <Navbar />
-      </div>
-      <div className="lg:w-3/4 mx-auto mb-10 mt-20" data-aos="fade-up">
-        <div className="text-center p-10 mt-20">
-          <h1 className="text-5xl font-bold mt-20">Update Lost & Found Item</h1>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-grow pt-28 pb-20 px-6">
+        <div className="container mx-auto max-w-3xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="text-center mb-10">
+              <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-3" style={{fontFamily: 'Outfit, sans-serif'}}>
+                Update <span className="text-gradient">Item</span>
+              </h1>
+              <p className="text-slate-400 text-lg">Edit the details of your reported item</p>
+            </div>
+
+            <div className="glass-panel p-8 md:p-10">
+              <form onSubmit={handleUpdateItem} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-slate-300 text-sm font-medium mb-2">Post Type</label>
+                    <select name="postType" defaultValue={itemData.postType}
+                      className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50" required>
+                      <option value="Lost">Lost</option>
+                      <option value="Found">Found</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-slate-300 text-sm font-medium mb-2">Category</label>
+                    <select name="category" defaultValue={itemData.category}
+                      className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50" required>
+                      <option value="pets">Pets</option>
+                      <option value="documents">Documents</option>
+                      <option value="gadgets">Gadgets</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-slate-300 text-sm font-medium mb-2">Thumbnail URL</label>
+                    <input type="text" name="thumbnail" defaultValue={itemData.thumbnail}
+                      className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50" required />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-slate-300 text-sm font-medium mb-2">Title</label>
+                    <input type="text" name="title" defaultValue={itemData.title}
+                      className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50" required />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <label className="block text-slate-300 text-sm font-medium mb-2">Description</label>
+                    <textarea name="description" defaultValue={itemData.description}
+                      className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50 min-h-[100px]" required />
+                  </div>
+                  <div>
+                    <label className="block text-slate-300 text-sm font-medium mb-2">Location</label>
+                    <input type="text" name="location" defaultValue={itemData.location}
+                      className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50" required />
+                  </div>
+                  <div>
+                    <label className="block text-slate-300 text-sm font-medium mb-2">Date Lost</label>
+                    <DatePicker selected={dateLost} onChange={(date) => setDateLost(date)}
+                      className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50" required />
+                  </div>
+                </div>
+
+                {/* Contact Info (read-only) */}
+                <div className="glass-panel p-4 mt-4">
+                  <p className="text-xs uppercase tracking-wider text-slate-500 font-bold mb-2">Contact Information</p>
+                  <p className="text-slate-300 text-sm">👤 {user?.displayName || "Anonymous"}</p>
+                  <p className="text-slate-400 text-sm">📧 {user?.email || "Anonymous"}</p>
+                </div>
+
+                <button type="submit" className="btn-primary-gradient w-full py-4 text-lg rounded-xl mt-4">
+                  Update Item
+                </button>
+              </form>
+            </div>
+          </motion.div>
         </div>
-        <div className="card bg-Buttons w-full shadow-2xl">
-          <form onSubmit={handleUpdateItem} className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-white">Post Type</span>
-              </label>
-              <select name="postType" className="input input-bordered" defaultValue={itemData.postType} required>
-                <option value="Lost">Lost</option>
-                <option value="Found">Found</option>
-              </select>
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-white">Thumbnail (Image URL)</span>
-              </label>
-              <input
-                type="text"
-                name="thumbnail"
-                defaultValue={itemData.thumbnail}
-                placeholder="Enter your Thumbnail URL"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-white">Title</span>
-              </label>
-              <input
-                type="text"
-                name="title"
-                defaultValue={itemData.title}
-                placeholder="Item title"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-white">Description</span>
-              </label>
-              <textarea
-                name="description"
-                defaultValue={itemData.description}
-                placeholder="Describe the item"
-                className="textarea textarea-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-white">Category</span>
-              </label>
-              <select name="category" className="input input-bordered" defaultValue={itemData.category} required>
-                <option value="pets">Pets</option>
-                <option value="documents">Documents</option>
-                <option value="gadgets">Gadgets</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-white">Location</span>
-              </label>
-              <input
-                type="text"
-                name="location"
-                defaultValue={itemData.location}
-                placeholder="Location where the item was lost"
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-white">Date Lost</span>
-              </label>
-              <DatePicker
-                selected={dateLost}
-                onChange={(date) => setDateLost(date)}
-                className="input input-bordered"
-                required
-              />
-            </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text text-white">Contact Information</span>
-              </label>
-              <input
-                type="text"
-                value={user?.displayName || "Anonymous User"}
-                disabled
-                className="input input-bordered mb-2"
-              />
-              <input
-                type="email"
-                value={user?.email || "Anonymous"}
-                disabled
-                className="input input-bordered"
-              />
-            </div>
-            <div className="form-control mt-6">
-              <button type="submit" className="btn bg-Profile hover:bg-Footer text-white">
-                Update Item
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+      </main>
       <Footer />
     </div>
   );

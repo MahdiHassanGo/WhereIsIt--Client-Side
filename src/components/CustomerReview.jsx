@@ -1,100 +1,121 @@
 import { useEffect, useState } from "react";
-import { motion, LayoutGroup } from "framer-motion";
-import Aos from "aos";
-import "aos/dist/aos.css";
+import { motion, AnimatePresence } from "framer-motion";
 
 const CustomerReview = () => {
   const testimonials = [
     {
       id: "george",
-      name: "George",
+      name: "George Miller",
+      role: "Verified User",
       image: "https://www.shutterstock.com/image-photo/smiling-african-american-millennial-businessman-600nw-1437938108.jpg",
-      quote: "I lost my phone then I get to know about WhereIsIt website I finally found my phone thank you <3",
+      quote: "I lost my phone and thought it was gone forever. Thanks to WhereIsIt, I was reunited with it in less than two days. Incredible community!",
     },
     {
       id: "noor",
-      name: "Noor",
+      name: "Noor Al-Farsi",
+      role: "Verified User",
       image: "https://www.shutterstock.com/image-photo/profile-picture-smiling-successful-young-260nw-2040223583.jpg",
-      quote: "I still could not believe I found my lost laptop from WhereIsIt!! 5 star Website!",
+      quote: "The interface is so clean and easy to use. I found my lost laptop within hours of posting. Highly recommend this to everyone!",
     },
     {
       id: "selina",
-      name: "Selina",
+      name: "Selina Gomez",
+      role: "Helpful Neighbor",
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqbu3vikTenBD-KfH9gwGG7N_rtaCwa8rxLA&s",
-      quote: "I found an iPhone on the ground and I posted on WhereIsIt. Within 1 hour I found the owner! Cool Website.",
+      quote: "Found an iPhone on my way home, posted it here, and found the owner within an hour! It's such a rewarding platform to use.",
     },
   ];
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    document.title = "Customer Testimonials | WhereIsIt";
-    Aos.init({ duration: 1000 });
-  }, []);
 
   const [selectedId, setSelectedId] = useState(null);
 
   return (
-    <section className=" py-12 mb-10">
-      <div className="max-w-screen-xl mx-auto px-4 text-center">
-        <h2 className="text-3xl font-bold font-charm text-white mb-6">
-          Customer Reviews
-        </h2>
+    <section className="py-24 px-6 relative overflow-hidden">
+      <div className="container mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-heading font-extrabold text-white mb-4">
+            Voices of <span className="text-gradient">Our Community</span>
+          </h2>
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg leading-relaxed">
+            Real stories from real users who found what they lost or helped others rediscover their belongings.
+          </p>
+        </div>
 
-        <LayoutGroup>
-          <motion.div
-            className="flex flex-wrap justify-center gap-6"
-            data-aos="fade-up"
-          >
-            {testimonials.map((testimonial) => (
-              <motion.div
-                key={testimonial.id}
-                layoutId={testimonial.id}
-                onClick={() => setSelectedId(testimonial.id)}
-                className="bg-Card shadow-md rounded-lg p-4 w-full md:w-1/3 transform transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl cursor-pointer"
-              >
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {testimonials.map((testimonial) => (
+            <motion.div
+              layoutId={testimonial.id}
+              key={testimonial.id}
+              onClick={() => setSelectedId(testimonial.id)}
+              className="glass-card p-8 cursor-pointer group hover:border-primary/30 transition-all duration-300"
+              whileHover={{ y: -5 }}
+            >
+              <div className="flex items-center gap-4 mb-6">
                 <img
                   src={testimonial.image}
                   alt={testimonial.name}
-                  className="w-20 h-16 rounded-full mx-auto mb-4"
+                  className="w-14 h-14 rounded-full object-cover border-2 border-primary/20 group-hover:border-primary transition-colors"
                 />
-                <h3 className="text-xl font-bold text-red-900">
-                  {testimonial.name}
-                </h3>
-                <p className="text-white italic mt-2">{testimonial.quote}</p>
-              </motion.div>
-            ))}
+                <div>
+                  <h3 className="text-white font-bold text-lg">{testimonial.name}</h3>
+                  <p className="text-slate-500 text-sm">{testimonial.role}</p>
+                </div>
+              </div>
+              <p className="text-slate-300 italic line-clamp-3 leading-relaxed">
+                "{testimonial.quote}"
+              </p>
+              <div className="mt-6 flex gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <span key={i} className="text-primary tracking-tighter">★</span>
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-          
-            {selectedId && (
+        <AnimatePresence>
+          {selectedId && (
+            <div className="fixed inset-0 z-[100] flex items-center justify-center px-4">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setSelectedId(null)}
+                className="absolute inset-0 bg-background/80 backdrop-blur-xl" 
+              />
               <motion.div
                 layoutId={selectedId}
-                className="absolute top-0 left-0 bg-Card w-full h-full flex flex-col items-center justify-center p-6 z-50"
+                className="glass-panel p-10 max-w-xl w-full relative z-10 border border-white/20 shadow-[0_0_50px_rgba(139,92,246,0.3)]"
               >
                 <button
                   onClick={() => setSelectedId(null)}
-                  className="absolute top-5 right-5 bg-gradient-to-r from-bgButton1 to-bgButton1 text-white px-4 py-2 rounded-lg"
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-white transition-all shadow-lg"
                 >
-                  Close
+                  ✕
                 </button>
                 {testimonials
-                  .filter((testimonial) => testimonial.id === selectedId)
-                  .map((testimonial) => (
-                    <div key={testimonial.id} className="text-center">
+                  .filter((t) => t.id === selectedId)
+                  .map((t) => (
+                    <div key={t.id} className="text-center">
                       <img
-                        src={testimonial.image}
-                        alt={testimonial.name}
-                        className="w-32 h-32 rounded-full mx-auto mb-4"
+                        src={t.image}
+                        alt={t.name}
+                        className="w-24 h-24 rounded-full mx-auto mb-6 object-cover border-4 border-primary/30 shadow-glow"
                       />
-                      <h3 className="text-2xl font-bold text-white mb-2">
-                        {testimonial.name}
+                      <h3 className="text-3xl font-heading font-bold text-white mb-1">
+                        {t.name}
                       </h3>
-                      <p className="text-white italic">{testimonial.quote}</p>
+                      <p className="text-primary font-medium mb-6 uppercase tracking-widest text-xs">
+                        {t.role}
+                      </p>
+                      <p className="text-slate-200 text-xl italic leading-relaxed">
+                        "{t.quote}"
+                      </p>
                     </div>
                   ))}
               </motion.div>
-            )}
-          </motion.div>
-        </LayoutGroup>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

@@ -4,15 +4,12 @@ import Navbar from "../components/Navbar";
 
 const AuthLayout = () => {
   return (
-    <div className="">
-    
-
-      <header className="py-3 w-11/12 mx-auto mt-5">
-      <Navbar></Navbar>
-        <Outlet></Outlet>
-      </header>
-
-      <Footer></Footer>
+    <div className="min-h-screen flex flex-col">
+      <Navbar />
+      <main className="flex-grow pt-24">
+        <Outlet />
+      </main>
+      <Footer />
     </div>
   );
 };

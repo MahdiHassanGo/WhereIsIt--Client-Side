@@ -4,14 +4,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../provider/AuthProvider";
 import { IoEyeSharp, IoEyeOffSharp } from "react-icons/io5";
-import Aos from 'aos';
-import 'aos/dist/aos.css';
+import { motion } from "framer-motion";
 
 const Register = () => {
-  useEffect(() => {
-    Aos.init({ duration: 1000 });
-}, []);
-
   useEffect(() => {
     document.title = "Register | WhereIsIt?";
     window.scrollTo(0, 0);
@@ -26,28 +21,15 @@ const Register = () => {
   const handlePasswordChange = (e) => {
     const value = e.target.value;
     setPassword(value);
-
-
     const passwordError = {};
-    if (!/[A-Z]/.test(value)) {
-      passwordError.uppercase = "Must include at least one uppercase letter";
-    }
-    if (!/[a-z]/.test(value)) {
-      passwordError.lowercase = "Must include at least one lowercase letter";
-    }
-    if (value.length < 6) {
-      passwordError.length = "Must be at least 6 characters long";
-    }
-
-    setError((prev) => ({
-      ...prev,
-      password: Object.keys(passwordError).length ? passwordError : null,
-    }));
+    if (!/[A-Z]/.test(value)) passwordError.uppercase = "Must include at least one uppercase letter";
+    if (!/[a-z]/.test(value)) passwordError.lowercase = "Must include at least one lowercase letter";
+    if (value.length < 6) passwordError.length = "Must be at least 6 characters long";
+    setError((prev) => ({ ...prev, password: Object.keys(passwordError).length ? passwordError : null }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const form = new FormData(e.target);
     const name = form.get("name");
     const email = form.get("email");
@@ -55,12 +37,10 @@ const Register = () => {
 
     if (name.length < 4) {
       setError({ ...error, name: "Must be more than 4 characters long" });
-      toast.error("Name Must be more than 4 characters long!");
+      toast.error("Name must be more than 4 characters!");
       return;
     }
-
     if (error.password) {
-      alert("Please fix the password errors before submitting.");
       toast.error("Please fix the password errors before submitting.");
       return;
     }
@@ -72,96 +52,91 @@ const Register = () => {
         updateUserProfile({ displayName: name, photoURL: photo })
           .then(() => {
             toast.success("Registration successful!", { autoClose: 3000 });
-                        setTimeout(() =>{
-                            navigate("/");
-                        }, 2000);
+            setTimeout(() => navigate("/"), 2000);
           })
-          .catch((err) => {
-           
-            toast.error("Error updating profile: " + err.message);
-          });
+          .catch((err) => toast.error("Error updating profile: " + err.message));
       })
-      .catch((err) => {
-        alert("Registration failed: " + err.message);
-        toast.error("Registration failed: " + err.message);
-        
-      });
+      .catch((err) => toast.error("Registration failed: " + err.message));
   };
 
   return (
-    
-    <div>
-        <ToastContainer position="top-center" />
-      <div className="hero   min-h-screen flex items-center justify-center mt-20" data-aos="fade-up">
-        <div className="hero-content flex-col  gap-6 w-full px-4 sm:px-8 md:px-16 lg:px-0">
-          <div className="text-center lg:text-left mt-20">
-            <h1 className="text-5xl font-bold">Register now!</h1>
-          </div>
-          <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-            <form onSubmit={handleSubmit} className="card-body">
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Email</span>
-                </label>
-                <input name="email" type="email" placeholder="Email" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Name</span>
-                </label>
-                <input name="name" type="text" placeholder="Name" className="input input-bordered" required />
-              </div>
-              <div className="form-control">
-                <label className="label">
-                  <span className="label-text">Photo URL</span>
-                </label>
-                <input name="photo" type="url" placeholder="Photo URL" className="input input-bordered" required />
-              </div>
-              <div className="form-control relative">
-                <label className="label">
-                  <span className="label-text">Password</span>
-                </label>
-              
-                  <input
-                    name="password"
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Password"
-                    value={password}
-                    onChange={handlePasswordChange}
-                    className="input input-bordered"
-                    required
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="btn btn-xs absolute right-2 top-12"
-                  >
-                    {showPassword ? <IoEyeSharp /> : <IoEyeOffSharp />}
-                  </button>
-           
-           
-                {error.password && (
-                  <ul className="text-red-500 text-sm mt-2">
-                    {Object.values(error.password).map((errMsg, index) => (
-                      <li key={index}>{errMsg}</li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-              <div className="form-control mt-6">
-                <button disabled={!!error.password} className="btn bg-Profile text-white">
-                  Register
-                </button>
-              </div>
-              <div className="flex justify-between mt-4">
-                <Link to="/auth/login" className="link link-hover text-sm">
-                  Already have an account? Login here
-                </Link>
-              </div>
-            </form>
-          </div>
+    <div className="min-h-screen flex items-center justify-center px-6 py-20">
+      <ToastContainer position="top-center" />
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-md"
+      >
+        <div className="text-center mb-10">
+          <Link to="/" className="text-3xl font-extrabold text-gradient" style={{fontFamily: 'Outfit, sans-serif'}}>
+            WhereIsIt.
+          </Link>
+          <h1 className="text-4xl font-bold text-white mt-6 mb-2" style={{fontFamily: 'Outfit, sans-serif'}}>Create account</h1>
+          <p className="text-slate-400">Join our community and start recovering items</p>
         </div>
-      </div>
+
+        <div className="glass-panel p-8">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-slate-300 text-sm font-medium mb-2">Email</label>
+              <input name="email" type="email" placeholder="you@example.com"
+                className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50 transition-all" required />
+            </div>
+            <div>
+              <label className="block text-slate-300 text-sm font-medium mb-2">Full Name</label>
+              <input name="name" type="text" placeholder="Your full name"
+                className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50 transition-all" required />
+            </div>
+            <div>
+              <label className="block text-slate-300 text-sm font-medium mb-2">Photo URL</label>
+              <input name="photo" type="url" placeholder="https://example.com/photo.jpg"
+                className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50 transition-all" required />
+            </div>
+            <div className="relative">
+              <label className="block text-slate-300 text-sm font-medium mb-2">Password</label>
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                value={password}
+                onChange={handlePasswordChange}
+                className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/50 transition-all pr-12"
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-10 text-slate-400 hover:text-white transition-colors"
+              >
+                {showPassword ? <IoEyeSharp size={18} /> : <IoEyeOffSharp size={18} />}
+              </button>
+              {error.password && (
+                <ul className="mt-2 space-y-1">
+                  {Object.values(error.password).map((errMsg, index) => (
+                    <li key={index} className="text-[#F43F5E] text-xs flex items-center gap-1">
+                      <span>•</span> {errMsg}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <button disabled={!!error.password} type="submit"
+              className="btn-primary-gradient w-full py-3 text-lg rounded-xl disabled:opacity-40 disabled:cursor-not-allowed">
+              Create Account
+            </button>
+          </form>
+
+          <p className="text-center text-slate-400 text-sm mt-8">
+            Already have an account?{" "}
+            <Link to="/auth/login" className="text-[#06B6D4] hover:text-white transition-colors font-medium">
+              Sign in
+            </Link>
+          </p>
+        </div>
+      </motion.div>
     </div>
   );
 };

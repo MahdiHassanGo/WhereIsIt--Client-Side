@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import ItemSection from '../components/ItemSection';
 import MainPage from '../components/MainPage';
@@ -10,26 +9,18 @@ import MainSlider from '../components/MainSlider';
 const MainLayout = () => {
      useEffect(() => {
         window.scrollTo(0, 0);
-       
         document.title = "Home | WhereIsIt";
-       
       }, []);
     return (
-        <div className=''>
-          <div className='  mx-auto w-11/12'>
-          <Navbar></Navbar>
-          </div>
-       
-            <div className='mx-auto'>
-            
-            
-            <MainPage></MainPage>
-            <MainSlider></MainSlider>
-            <ItemSection></ItemSection>
-            <CustomerReview></CustomerReview>
-
-            </div>
-           <Footer></Footer>
+        <div className="min-h-screen">
+          <Navbar />
+          <main>
+            <MainPage />
+            <MainSlider />
+            <ItemSection />
+            <CustomerReview />
+          </main>
+          <Footer />
         </div>
     );
 };
